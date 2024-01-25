@@ -5,7 +5,7 @@
         <div class="ratio ratio-21x9 bg-dark position-relative">
             <img src="{{asset('images/home_2.webp')}}" class="w-100 object-fit-contain opacity-75" alt="home">
             <div
-                class="position-absolute luxury-font text-white text-capitalize d-flex justify-content-center align-items-center flex-column">
+                class="position-absolute text-white text-capitalize d-flex justify-content-center align-items-center flex-column">
                 <span class="fs-1 fade-in fade-bottom">
                     Year of the Dragon
                 </span>
@@ -23,28 +23,36 @@
         <div class="d-flex justify-content-evenly align-items-center mt-5 fade-in fade-bottom">
             <div class="w-20 text-center home-product-card">
                 <div class="w-100 bg-warning rounded">
-                    <img src="{{asset('images/product_1.webp')}}" class="p-3" alt="product">
+                    <a href="">
+                        <img src="{{asset('images/product_1.webp')}}" class="p-3" alt="product">
+                    </a>
                 </div>
                 <h5 class="mt-3">Auspicious Dragon</h5>
                 <p>Mark the Year of the Dragon with this colorful LEGO® set</p>
             </div>
             <div class="w-20 text-center home-product-card">
                 <div class="w-100 bg-warning rounded">
-                    <img src="{{asset('images/product_2.webp')}}" class="p-3" alt="product">
+                    <a href="">
+                        <img src="{{asset('images/product_2.webp')}}" class="p-3" alt="product">
+                    </a>
                 </div>
                 <h5 class="mt-3">Family Reunion Celebration</h5>
                 <p>Enjoy a Spring Festival tradition at a Chinese-style restaurant.</p>
             </div>
             <div class="w-20 text-center home-product-card">
                 <div class="w-100 bg-warning rounded">
-                    <img src="{{asset('images/product_3.webp')}}" class="p-3" alt="product">
+                    <a href="">
+                        <img src="{{asset('images/product_3.webp')}}" class="p-3" alt="product">
+                    </a>
                 </div>
                 <h5 class="mt-3">Money Tree</h5>
                 <p>Build this traditional New Year gift, adorned with riches and rewards.</p>
             </div>
             <div class="w-20 text-center home-product-card">
                 <div class="w-100 bg-warning rounded">
-                    <img src="{{asset('images/product_4.webp')}}" class="p-3" alt="product">
+                    <a href="">
+                        <img src="{{asset('images/product_4.webp')}}" class="p-3" alt="product">
+                    </a>
                 </div>
                 <h5 class="mt-3">Festival Calendar</h5>
                 <p>Give this rotating set, featuring traditional New Year symbols.</p>
@@ -56,7 +64,7 @@
         <div class="ratio ratio-21x9 bg-dark position-relative">
             <img src="{{asset('images/home_3.webp')}}" class="w-100 object-fit-contain opacity-75" alt="home">
             <div
-                class="position-absolute luxury-font text-white text-capitalize d-flex justify-content-center align-items-center flex-column">
+                class="position-absolute text-white text-capitalize d-flex justify-content-center align-items-center flex-column">
                 <span class="fs-1 fade-in fade-bottom">
                     Give love that’s built to last
                 </span>
@@ -74,28 +82,36 @@
         <div class="d-flex justify-content-evenly align-items-center mt-5 fade-in fade-bottom">
             <div class="w-20 text-center home-product-card">
                 <div class="w-100 bg-danger rounded">
-                    <img src="{{asset('images/product_5.webp')}}" class="p-3" alt="product">
+                    <a href="">
+                        <img src="{{asset('images/product_5.webp')}}" class="p-3" alt="product">
+                    </a>
                 </div>
                 <h5 class="mt-3">Bouquet of Roses</h5>
                 <p>Give a radiant bouquet filled with a dozen buildable red roses</p>
             </div>
             <div class="w-20 text-center home-product-card">
                 <div class="w-100 bg-danger rounded">
-                    <img src="{{asset('images/product_6.webp')}}" class="p-3" alt="product">
+                    <a href="">
+                        <img src="{{asset('images/product_6.webp')}}" class="p-3" alt="product">
+                    </a>
                 </div>
                 <h5 class="mt-3">Tiny Plants</h5>
                 <p>Craft 9 plants each nestled in a terracotta-colored plant pot</p>
             </div>
             <div class="w-20 text-center home-product-card">
                 <div class="w-100 bg-danger rounded">
-                    <img src="{{asset('images/product_7.webp')}}" class="p-3" alt="product">
+                    <a href="">
+                        <img src="{{asset('images/product_7.webp')}}" class="p-3" alt="product">
+                    </a>
                 </div>
                 <h5 class="mt-3">Vincent van Gogh - The Starry Night</h5>
                 <p>Give a gift of mindful building and artistic expression</p>
             </div>
             <div class="w-20 text-center home-product-card">
                 <div class="w-100 bg-danger rounded">
-                    <img src="{{asset('images/product_8.webp')}}" class="p-3" alt="product">
+                    <a href="">
+                        <img src="{{asset('images/product_8.webp')}}" class="p-3" alt="product">
+                    </a>
                 </div>
                 <h5 class="mt-3">Wildflower Bouquet</h5>
                 <p>Go wild with an arrangement that can be displayed forever</p>
