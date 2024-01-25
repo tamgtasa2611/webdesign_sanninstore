@@ -14,9 +14,29 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('customers.home');
 });
 
-Route::get('/admin', function () {
-    return "Trang admin";
+Route::get('/home', function () {
+    return view('customers.home');
+});
+
+Route::get('/product', function () {
+    return view('customers.products.index');
+});
+
+Route::get('/discover', function () {
+    return view('customers.products.index');
+});
+
+Route::get('/help', function () {
+    return view('customers.help');
+});
+
+Route::get('/profile', function () {
+    return view('customers.profiles.profile');
+});
+
+Route::get('/cart', function () {
+    return view('customers.carts.cart');
 });
