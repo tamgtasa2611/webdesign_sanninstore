@@ -2,11 +2,11 @@
 <x-layout>
     @include('layouts/nav')
     <div class="container-fluid p-0">
-        <div class="ratio ratio-21x9 bg-dark position-relative">
+        <div class="bg-dark position-relative d-flex justify-content-center align-items-center">
             <img src="{{asset('images/home_2.webp')}}" class="w-100 object-fit-contain opacity-75" alt="home">
             <div
                 class="position-absolute text-white text-capitalize d-flex justify-content-center align-items-center flex-column">
-                <span class="fs-1 fade-in fade-bottom">
+                <span class="luxury-font fs-1 fade-in fade-bottom">
                     Year of the Dragon
                 </span>
                 <p class="fade-in fade-bottom">
@@ -61,7 +61,7 @@
     </div>
     {{--  End Products  --}}
     <div class="container-fluid p-0">
-        <div class="ratio ratio-21x9 bg-dark position-relative">
+        <div class="mt-5 bg-dark position-relative d-flex justify-content-center align-items-center">
             <img src="{{asset('images/home_3.webp')}}" class="w-100 object-fit-contain opacity-75" alt="home">
             <div
                 class="position-absolute text-white text-capitalize d-flex justify-content-center align-items-center flex-column">
