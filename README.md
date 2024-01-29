@@ -1,4 +1,5 @@
 === LARAVEL ===
+**Phải tạo sẵn 1 thư mục laravel (composer create-project laravel/laravel .) xong copy các file trên github thì mới chạy đc
 1. pull thư mục laravel về xong chạy lệnh    
 npm install
 2. cài bootstrap và icons    
