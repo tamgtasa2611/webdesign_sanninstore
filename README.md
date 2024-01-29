@@ -1,3 +1,7 @@
+=== DATABASE ===
+chạy code sql trong file_khac/db.sql        
+phần product có thể insert lặp lại 10 20 cái để test chức năng phân trang         
+
 === LARAVEL ===
 **Phải tạo sẵn 1 thư mục laravel (composer create-project laravel/laravel .) xong copy các file trên github thì mới chạy đc
 1. pull thư mục laravel về xong chạy lệnh    
