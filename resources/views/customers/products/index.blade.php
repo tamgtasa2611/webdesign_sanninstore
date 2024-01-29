@@ -1,12 +1,14 @@
 @vite(["resources/sass/app.scss", "resources/js/app.js"])
 <x-layout>
     @include('layouts/nav')
-    <div class="container-fluid vh-100 py-3 fs-6">
+    <div class="container-fluid py-3 fs-6">
         <div class="d-flex justify-content-between">
             <div class="w-100 text-capitalize text-center fs-4 fw-bold">Lego Products</div>
         </div>
         <hr>
+
         <div class="d-flex">
+            {{--FILTER--}}
             <div class="w-20 pe-3">
                 <div class="w-100">Filters</div>
                 <hr>
@@ -146,6 +148,8 @@
                     </div>
                 </form>
             </div>
+            {{--END FILTER--}}
+            {{--PRODUCT--}}
             <div class="w-80">
                 <div class="w-100 text-end">
                     <div>
@@ -160,7 +164,7 @@
                                 <div class="d-flex align-items-center justify-content-center">
                                     <img
                                         src="{{$product->image}}"
-                                        width="200px" alt="">
+                                        height="160px" alt="product_image">
                                 </div>
                                 <div>
                                     {{$product->product_name}}
@@ -179,9 +183,13 @@
                             </div>
                         @endforeach
                     </div>
+                    {{--                    pagination--}}
+                    <div class="mt-5">
+                        {{$products->onEachSide(2)->links()}}
+                    </div>
                 </div>
             </div>
-
+            {{--END PRODUCT--}}
         </div>
     </div>
     @include('layouts/footer')
