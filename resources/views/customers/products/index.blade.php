@@ -160,23 +160,29 @@
                 <div class="container text-center">
                     <div class="row row-cols-3">
                         @foreach($products as $product)
-                            <div class="col shadow border">
-                                <div class="d-flex align-items-center justify-content-center">
+                            <div class="col border">
+                                <div class="mt-5 d-flex align-items-center justify-content-center">
                                     <img
                                         src="{{$product->image}}"
-                                        height="160px" alt="product_image">
+                                        height="200px"
+                                        class="p-1"
+                                        alt="product_image">
                                 </div>
-                                <div>
+                                <div class="mt-5">
                                     {{$product->product_name}}
                                 </div>
-                                <div class="d-flex justify-content-between align-items-center">
+                                <div class="mt-5 mb-2 d-flex justify-content-between align-items-center">
                                     <div class="w-50 text-start p-3 text-success fw-bold">${{$product->price}}</div>
                                     <div class="d-flex w-50 justify-content-end">
                                         <div>
-                                            <i class="p-3 bi bi-star bg-warning"></i>
+                                            <a href="">
+                                                <i class="p-3 bi bi-star-fill text-warning"></i>
+                                            </a>
                                         </div>
                                         <div>
-                                            <i class="p-3 bi bi-bag bg-primary"></i>
+                                            <a href="">
+                                                <i class="p-3 bi bi-bag-fill text-primary"></i>
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
