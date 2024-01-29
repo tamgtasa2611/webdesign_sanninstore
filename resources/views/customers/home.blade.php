@@ -16,7 +16,7 @@
         </div>
     </div>
     {{--  Products  --}}
-    <div class="container text-dark mt-5 bg-white rounded">
+    <div class="container text-dark mt-5 bg-white rounded shadow border">
         <div class="fs-1 pt-5 luxury-font home-product-text fade-in text-center fade-top">
             Spring Festival gift ideas
         </div>
@@ -75,7 +75,7 @@
         </div>
     </div>
     {{--  Products  --}}
-    <div class="container text-dark mt-5 bg-white rounded">
+    <div class="container text-dark mt-5 bg-white rounded shadow border">
         <div class="fs-1 pt-5 luxury-font home-product-text fade-in text-center fade-top">
             Valentine's Day Ideas
         </div>
@@ -120,10 +120,10 @@
     </div>
     {{--  End Products  --}}
     <div class="container-fluid p-0 mt-5">
-        <div class="ratio ratio-21x9 bg-dark position-relative">
-            <img src="{{asset('images/home_1.webp')}}" class="w-100 opacity-75 object-fit-cover" alt="">
+        <div class="bg-dark position-relative d-flex justify-content-center align-items-center">
+            <img src="{{asset('images/home_1.webp')}}" class="w-100 object-fit-contain opacity-75" alt="">
             <div
-                class="position-absolute text-white d-flex justify-content-center align-items-center">
+                class="position-absolute text-white text-capitalize d-flex justify-content-center align-items-center flex-column">
                 <div class="container d-flex justify-content-between fade-in fade-bottom">
                     <div class="w-25 text-center d-flex justify-content-center align-items-center flex-column">
                         <i class="bi bi-truck fs-2 p-2"></i>

@@ -17,7 +17,7 @@
     <title>Sannin Store</title>
 </head>
 <body>
-<main class="overflow-hidden position-relative bg-dark">
+<main class="overflow-hidden position-relative">
     {{$slot}}
 </main>
 </body>

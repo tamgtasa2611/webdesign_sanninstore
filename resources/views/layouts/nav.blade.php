@@ -1,5 +1,5 @@
 <nav class="navbar bg-warning navbar-expand-lg bd-navbar fixed-top">
-    <div class="container-xxl bd-gutter flex-wrap flex-lg-nowrap text-uppercase">
+    <div class="container-xxl bd-gutter flex-wrap flex-lg-nowrap text-uppercase px-0">
         <a class="navbar-brand" href="/">
             <img src="{{asset('images/brand.png')}}" alt="brand"
                  height="32" class="rounded">
