@@ -134,6 +134,12 @@ INSERT INTO countries(country_name) VALUES
 ("Vietnam");
 
 INSERT INTO products(product_name, quantity, price, description, image, category_id, country_id, age_id, brand_id) VALUES
+("Auspicious Dragon", 100, 89.99, "", "images/products/product_1.webp", 3, 1, 6, 2),
+("Batmobile™: Batman™ vs. The Joker™ Chase", 100, 47.99, "", "images/products/product_2.webp", 1, 2, 3, 4),
+("Spring Festival Mickey Mouse", 100, 9.99, "", "images/products/product_3.webp", 5, 3, 1, 2),
+("Nano Gauntlet", 100, 69.99, "", "images/products/product_4.webp", 3, 4, 2, 6),
+("The Abandoned Mine", 100, 19.99, "", "images/products/product_5.webp", 2, 5, 4, 1),
+("Heart Ornament", 100, 12.99, "", "images/products/product_6.webp", 4, 6, 5, 5),
 ("2Auspicious Dragon", 100, 89.99, "", "images/products/product_1.webp", 3, 1, 6, 2),
 ("2Batmobile™: Batman™ vs. The Joker™ Chase", 100, 47.99, "", "images/products/product_2.webp", 1, 2, 3, 4),
 ("2Spring Festival Mickey Mouse", 100, 9.99, "", "images/products/product_3.webp", 5, 3, 1, 2),
