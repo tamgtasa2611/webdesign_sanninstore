@@ -1,17 +1,33 @@
 @vite(["resources/sass/app.scss", "resources/js/app.js"])
 <x-layout>
     @include('layouts/nav')
-    <div class="container-fluid py-3 fs-6">
-        <div class="d-flex justify-content-between">
-            <div class="w-100 text-capitalize text-center fs-4 fw-bold">Lego Products</div>
+    <div class="d-flex justify-content-between mb-3">
+        <div class="w-100 text-capitalize text-center fs-3 fw-bold bg-dark text-white py-4">
+            Sannin Store Lego Products
         </div>
-        <hr>
-
+    </div>
+    <div class="container-fluid fs-6">
+        {{--                SORTING--}}
+        <div class="d-flex justify-content-end align-items-center">
+            <form action="" class="d-flex">
+                <label for="sorting" class="w-50 d-flex align-items-center justify-content-center px-1">
+                    Sort by
+                </label>
+                <select class="form-select" aria-label="sorting" id="sorting">
+                    <option value="1">Default</option>
+                    <option value="2">Newest</option>
+                    <option value="3">Bestseller</option>
+                    <option value="4">Price: Low to High</option>
+                    <option value="5">Price: High to Low</option>
+                    <option value="5">Price: High to Low</option>
+                </select>
+            </form>
+        </div>
+        {{--        MAIN--}}
         <div class="d-flex">
             {{--FILTER--}}
             <div class="w-20 pe-3">
-                <div class="w-100">Filters</div>
-                <hr>
+                <hr class="mt-0">
                 <form action="" method="get">
                     <div class="w-100 filter-item">
                         <div>
@@ -151,39 +167,41 @@
             {{--END FILTER--}}
             {{--PRODUCT--}}
             <div class="w-80">
-                <div class="w-100 text-end">
-                    <div>
-                        Showing {{count($products)}} products
-                    </div>
-                </div>
-                <hr>
+                {{--                PRODUCT LIST--}}
                 <div class="container text-center">
                     <div class="row row-cols-3">
                         @foreach($products as $product)
                             <div class="col border">
-                                <div class="mt-5 d-flex align-items-center justify-content-center">
+                                <div
+                                    class="position-relative overflow-hidden d-flex justify-content-center">
                                     <img
                                         src="{{$product->image}}"
                                         height="200px"
-                                        class="p-1"
+                                        class="p-1 mt-5"
                                         alt="product_image">
+                                    <div
+                                        class="w-100 mt-3 position-absolute d-flex justify-content-between">
+                                        <div class="p-2 bg-light border rounded-5">
+                                            <i class="py-3 bi bi-star text-warning"></i>
+                                        </div>
+                                        <div class="d-flex align-items-center">
+                                            <i class="bi bi-cake2 p-1"></i>
+                                            <span class="p-1">
+                                                {{$product->age_id}}
+                                            </span>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="mt-5">
                                     {{$product->product_name}}
                                 </div>
-                                <div class="mt-5 mb-2 d-flex justify-content-between align-items-center">
-                                    <div class="w-50 text-start p-3 text-success fw-bold">${{$product->price}}</div>
-                                    <div class="d-flex w-50 justify-content-end">
-                                        <div>
-                                            <a href="">
-                                                <i class="p-3 bi bi-star-fill text-warning"></i>
-                                            </a>
-                                        </div>
-                                        <div>
-                                            <a href="">
-                                                <i class="p-3 bi bi-bag-fill text-primary"></i>
-                                            </a>
-                                        </div>
+                                <div class="mt-5 mb-3 d-flex justify-content-between align-items-center">
+                                    <div class="w-50 text-start text-success fw-bold">${{$product->price}}</div>
+                                    <div class="w-50 text-end">
+                                        <a href="" class="btn btn-primary rounded-5">
+                                            <i class="p-2 bi bi-bag"></i>
+                                            <span>Add to cart</span>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -191,7 +209,9 @@
                     </div>
                     {{--                    pagination--}}
                     <div class="mt-5">
-                        {{$products->onEachSide(2)->links()}}
+                        <div class="pt-3">
+                            {{$products->onEachSide(2)->links()}}
+                        </div>
                     </div>
                 </div>
             </div>
