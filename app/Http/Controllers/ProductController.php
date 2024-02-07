@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+
 
 class ProductController extends Controller
 {
@@ -19,5 +21,65 @@ class ProductController extends Controller
         return view('customers.products.index', [
             'products' => $products
         ]);
+        
+    }
+    // public function index(){
+    //     return view('products.index');
+    // }
+
+    // public function create(){
+    //     return view('products.create');
+    // }
+    // public function store(Request $request){
+    //     dd($request);
+    // }
+    public function indexAdmins(){
+        $products = Product::all();
+         return view('products.index',['products' => $products]);
+     }
+
+     public function create(){
+         return view('products.create');
+     }
+     public function store(Request $request){
+        $data = $request-> validate([
+        'product_name' => 'required',
+        'quantity' => 'required|numeric',
+        'price' => 'required|numeric',
+        'description' => 'required',
+        // 'image' => 'required',
+        'category_id' => 'required|numeric',
+        'country_id' => 'required|numeric',
+        'age_id' => 'required|numeric',
+        'brand_id' => 'required|numeric',
+    ]);
+        $newProduct = Product::create($data);
+        return redirect(route('products.index'));
+    }
+    public function edit(Product $product){
+        return view('products.edit' , ['product' => $product]);
+    }
+    public function update(Product $product,Request $request){
+        $data = $request-> validate([
+            'product_name' => 'required',
+            'quantity' => 'required|numeric',
+            'price' => 'required|numeric',
+            'description' => 'required',
+            // 'image' => 'required',
+            'category_id' => 'required|numeric',
+            'country_id' => 'required|numeric',
+            'age_id' => 'required|numeric',
+            'brand_id' => 'required|numeric',
+        ]);
+        
+        $product -> update($data);
+        return redirect(route('products.index'));
+    }
+    public function destroy(Product $product, Request $request)
+    {
+        //Xóa bản ghi được chọn
+        $product->delete();
+        //Quay về danh sách
+        return redirect(route('products.index'));
     }
 }

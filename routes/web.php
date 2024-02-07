@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
+use App\Models\Product;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -38,3 +40,9 @@ Route::get('/profile', function () {
 Route::get('/cart', function () {
     return view('customers.carts.cart');
 })->name('cart');
+Route::get('/products',[ProductController::class,'indexAdmins'])->name('products.index');
+Route::get('/products/create',[ProductController::class,'create']) ->name('products.create');
+Route::post('/products',[ProductController::class,'store']) -> name('products.store');
+Route::get('/products/{product}/edit',[ProductController::class,'edit']) -> name('products.edit');
+Route::put('/products/{product}/update',[ProductController::class,'update']) -> name('products.update');
+Route::delete('/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
