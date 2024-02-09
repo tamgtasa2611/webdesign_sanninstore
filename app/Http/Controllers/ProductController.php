@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\category;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-
-
+use App\Models\Age;
+use App\Models\Brand;
+use App\Models\Country;
 class ProductController extends Controller
 {
     //show all products
@@ -35,7 +37,11 @@ class ProductController extends Controller
     // }
     public function indexAdmins(){
         $products = Product::all();
-         return view('products.index',['products' => $products]);
+        $categories = Category::all();
+        $ages = Age::all();
+        $countries = Country::all();
+        $brands = Brand::all();
+         return view('products.index',compact('products','categories','ages','countries','brands'));
      }
 
      public function create(){
@@ -47,7 +53,7 @@ class ProductController extends Controller
         'quantity' => 'required|numeric',
         'price' => 'required|numeric',
         'description' => 'required',
-        // 'image' => 'required',
+        'image' => 'required',
         'category_id' => 'required|numeric',
         'country_id' => 'required|numeric',
         'age_id' => 'required|numeric',

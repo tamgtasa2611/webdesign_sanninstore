@@ -29,10 +29,10 @@
             <label for="">Description</label>
             <input type="text" name="description" placeholder="description">
            </div>
-           {{-- <div>
+             <div>
             <label for="">Image</label>
-            <input type="number" name="image" placeholder="image">
-           </div> --}}
+            <input type="file" name="image" placeholder="image">
+           </div> 
            <div>
             {{-- <label for="">Categories</label>
             <br>

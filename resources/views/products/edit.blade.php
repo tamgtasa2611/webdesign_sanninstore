@@ -10,6 +10,7 @@
  {{-- product_name, quantity, price, description, image, category_id, country_id, age_id, brand_id --}}
     
  <h1>Editing</h1>
+    <a href="{{route('products.index')}}"></a>
     <form action="{{ route('products.update',['product' => $product]) }}" method="POST">
      @csrf
     <!--put để update-->

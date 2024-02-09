@@ -28,11 +28,27 @@
                 <td>{{$product -> quantity}}</td>
                 <td>{{$product -> price}}</td>
                 <td>{{$product -> description}}</td>
-                <td>{{$product -> image}}</td>
-                <td>{{$product -> brand_id}}</td>
-                <td>{{$product -> age_id}}</td>
-                <td>{{$product -> category_id}}</td>
-                <td>{{$product -> country_id}}</td>
+                <td><img src="{{ $product -> image }}" alt="" style="width: 50px;height:50px"></td>
+                <td>@foreach ($brands as $brand)
+                    @if ($product['brand_id'] == $brand['id'])
+                        {{ $brand -> brand_name }}
+                    @endif
+                @endforeach</td>
+                <td>@foreach ($ages as $age)
+                    @if ($product['age_id'] == $age['id'])
+                        {{$age -> age_name}}
+                    @endif
+                @endforeach</td>
+                <td>@foreach($categories as $category)
+                    @if($product['category_id'] == $category['id'])
+                        {{ $category -> category_name }}
+                    @endif
+                @endforeach</td>
+                <td>@foreach($countries as $country)
+                    @if($product['country_id'] == $country['id'])
+                        {{ $country -> country_name }}
+                    @endif
+                @endforeach</td>
                 <td><a href="{{route('products.edit',['product' => $product])}}">Edit</a></td>
                 <td>
                     <form method="post" action="{{ route('products.destroy', $product) }}">
