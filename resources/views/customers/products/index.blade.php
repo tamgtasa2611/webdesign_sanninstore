@@ -3,24 +3,54 @@
     @include('layouts/nav')
     <div class="d-flex justify-content-between mb-3">
         <div class="w-100 text-capitalize text-center fs-3 fw-bold bg-dark text-white py-4">
-            Sannin Store Lego Products
+            {{$search != "" ? 'Search results for "' . $search . '"' : 'Sannin Store Lego Products'}}
         </div>
     </div>
     <div class="container-fluid fs-6">
         {{--                SORTING--}}
         <div class="d-flex justify-content-end align-items-center">
-            <form action="" class="d-flex">
+            <form action="" class="d-flex" style="width: 250px">
+                {{--                select--}}
                 <label for="sorting" class="w-50 d-flex align-items-center justify-content-center px-1">
                     Sort by
                 </label>
-                <select class="form-select" aria-label="sorting" id="sorting">
-                    <option value="1">Default</option>
-                    <option value="2">Newest</option>
-                    <option value="3">Bestseller</option>
-                    <option value="4">Price: Low to High</option>
-                    <option value="5">Price: High to Low</option>
-                    <option value="5">Price: High to Low</option>
+                <select class="form-select" aria-label="sorting" id="sorting" name="sorting"
+                        onchange="this.form.submit()">
+                    <option value="default" {{$sorting == 'default' ? 'selected' : ''}}>Default
+                    </option>
+                    <option value="newest" {{$sorting == 'newest' ? 'selected' : ''}}>Newest
+                    </option>
+                    <option value="bestseller" {{$sorting == 'bestseller' ? 'selected' : ''}}>
+                        Bestseller
+                    </option>
+                    <option value="low_to_high" {{$sorting == 'low_to_high' ? 'selected' : ''}}>
+                        Price: Low to High
+                    </option>
+                    <option value="high_to_low" {{$sorting == 'high_to_low' ? 'selected' : ''}}>
+                        Price: High to Low
+                    </option>
                 </select>
+                {{--                lay giay tri search--}}
+                <input type="hidden" class="invisible" name="search" value="{{$search}}">
+                {{--                lay gia tri filter      --}}
+                <input type="hidden" class="invisible" name="price_1" value="{{$f_price_1}}">
+                <input type="hidden" class="invisible" name="price_2" value="{{$f_price_2}}">
+                @foreach($f_brand as $brand_value)
+                    <input type="hidden" class="invisible" name="brand[]"
+                           value="{{is_array($brand_value) ? implode($brand_value) : $brand_value}}">
+                @endforeach
+                @foreach($f_category as $category_value)
+                    <input type="hidden" class="invisible" name="category[]"
+                           value="{{is_array($category_value) ? implode($category_value) : $category_value}}">
+                @endforeach
+                @foreach($f_age as $age_value)
+                    <input type="hidden" class="invisible" name="age[]"
+                           value="{{is_array($age_value) ? implode($age_value) : $age_value}}">
+                @endforeach
+                @foreach($f_country as $country_value)
+                    <input type="hidden" class="invisible" name="country[]"
+                           value="{{is_array($country_value) ? implode($country_value) : $country_value}}">
+                @endforeach
             </form>
         </div>
         {{--        MAIN--}}
@@ -29,129 +59,147 @@
             <div class="w-20 pe-3">
                 <hr class="mt-0">
                 <form action="" method="get">
-                    <div class="w-100 filter-item">
+                    {{--                    lay gia tri search--}}
+                    <input type="hidden" class="invisible" name="search" value="{{$search}}">
+                    {{--                    PRICE--}}
+                    <div class="w-100">
                         <div>
-                            <div class="d-flex justify-content-between align-items-center hover-pointer filter-main"
-                                 data-bs-toggle="collapse" data-bs-target="#sort" aria-expanded="false"
-                                 aria-controls="sort">
-                                <div class="filter-title">Sort by</div>
-                                <div>
-                                    <i class="bi bi-chevron-down"></i>
-                                </div>
-                            </div>
-                            <div class="collapse collapsing expand" id="sort">
-                                <div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="sort" id="re" value=""
-                                               checked>
-                                        <label class="form-check-label" for="re">
-                                            Recommended
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="sort" id="ne" value="">
-                                        <label class="form-check-label" for="ne">
-                                            Newest
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="sort" id="lo" value="">
-                                        <label class="form-check-label" for="lo">
-                                            Price: Low to High
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="sort" id="hi" value="">
-                                        <label class="form-check-label" for="hi">
-                                            Price: High to Low
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <hr>
-                    </div>
-
-                    <div class="w-100 filter-item">
-                        <div>
-                            <div class="d-flex justify-content-between align-items-center hover-pointer filter-main"
-                                 data-bs-toggle="collapse" data-bs-target="#price" aria-expanded="false"
+                            <div class="d-flex justify-content-between align-items-center h-pointer"
+                                 data-bs-toggle="collapse" data-bs-target="#price"
                                  aria-controls="price">
-                                <div class="filter-title">Price</div>
+                                <div class="">Price</div>
                                 <div>
                                     <i class="bi bi-chevron-down"></i>
                                 </div>
                             </div>
                             <div class="collapse collapsing expand" id="price">
-                                <div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="price" id="0" value=""
-                                        >
-                                        <label class="form-check-label" for="0">
-                                            $0 - $50
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="price" id="1" value="">
-                                        <label class="form-check-label" for="1">
-                                            $50 - $100
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="price" id="2" value="">
-                                        <label class="form-check-label" for="2">
-                                            $100 - $200
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="price" id="3" value="">
-                                        <label class="form-check-label" for="3">
-                                            > $200
-                                        </label>
-                                    </div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <input type="number" class="form-control w-45" name="price_1" id="price_1"
+                                           step="0.01" value="{{$f_price_1 != 0 ? $f_price_1 : ''}}" min="0"
+                                           placeholder="Start price">
+                                    <input type="number" class="form-control w-45" name="price_2" id="price_2"
+                                           step="0.01" value="{{$f_price_2 != 9999 ? $f_price_2 : ''}}" min="0"
+                                           placeholder="End price">
                                 </div>
                             </div>
                         </div>
                         <hr>
                     </div>
-
-                    <div class="w-100 filter-item">
+                    {{--BRAND--}}
+                    <div class="w-100">
                         <div>
-                            <div class="d-flex justify-content-between align-items-center hover-pointer filter-main"
-                                 data-bs-toggle="collapse" data-bs-target="#brand" aria-expanded="false"
+                            <div class="d-flex justify-content-between align-items-center h-pointer"
+                                 data-bs-toggle="collapse" data-bs-target="#brand"
                                  aria-controls="brand">
-                                <div class="filter-title">Brand</div>
+                                <div class="">Brand</div>
                                 <div>
                                     <i class="bi bi-chevron-down"></i>
                                 </div>
                             </div>
                             <div class="collapse collapsing expand" id="brand">
                                 <div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="brand" id="ga" value=""
-                                        >
-                                        <label class="form-check-label" for="ga">
-                                            Giorgio Armani
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="brand" id="ch" value="">
-                                        <label class="form-check-label" for="ch">
-                                            Channel
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="brand" id="di" value="">
-                                        <label class="form-check-label" for="di">
-                                            Dior
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="brand" id="dg" value="">
-                                        <label class="form-check-label" for="dg">
-                                            Dolce & Gabbana
-                                        </label>
-                                    </div>
+                                    @foreach($brands as $brand)
+                                        <div class="form-check">
+                                            <input class="form-check-input h-pointer" type="checkbox" name="brand[]"
+                                                   id="brand_{{$brand->id}}"
+                                                   value="{{$brand->id}}"
+                                                {{in_array($brand->id, $f_brand) ? 'checked' : ''}}
+                                            >
+                                            <label class="form-check-label h-pointer" for="brand_{{$brand->id}}">
+                                                {{$brand->brand_name}}
+                                            </label>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                    </div>
+                    {{--CATEGORY--}}
+                    <div class="w-100">
+                        <div>
+                            <div class="d-flex justify-content-between align-items-center h-pointer"
+                                 data-bs-toggle="collapse" data-bs-target="#category"
+                                 aria-controls="category">
+                                <div class="">Category</div>
+                                <div>
+                                    <i class="bi bi-chevron-down"></i>
+                                </div>
+                            </div>
+                            <div class="collapse collapsing expand" id="category">
+                                <div>
+                                    @foreach($categories as $category)
+                                        <div class="form-check">
+                                            <input class="form-check-input h-pointer" type="checkbox" name="category[]"
+                                                   id="category_{{$category->id}}"
+                                                   value="{{$category->id}}"
+                                                {{in_array($category->id, $f_category) ? 'checked' : ''}}
+                                            >
+                                            <label class="form-check-label h-pointer" for="category_{{$category->id}}">
+                                                {{$category->category_name}}
+                                            </label>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                    </div>
+                    {{--AGE--}}
+                    <div class="w-100">
+                        <div>
+                            <div class="d-flex justify-content-between align-items-center h-pointer"
+                                 data-bs-toggle="collapse" data-bs-target="#age"
+                                 aria-controls="age">
+                                <div class="">Ages</div>
+                                <div>
+                                    <i class="bi bi-chevron-down"></i>
+                                </div>
+                            </div>
+                            <div class="collapse collapsing expand" id="age">
+                                <div>
+                                    @foreach($ages as $age)
+                                        <div class="form-check">
+                                            <input class="form-check-input h-pointer" type="checkbox" name="age[]"
+                                                   id="age_{{$age->id}}"
+                                                   value="{{$age->id}}"
+                                                {{in_array($age->id, $f_age) ? 'checked' : ''}}
+                                            >
+                                            <label class="form-check-label h-pointer" for="age_{{$age->id}}">
+                                                {{$age->age_name}}
+                                            </label>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                    </div>
+                    {{--COUNTRY--}}
+                    <div class="w-100">
+                        <div>
+                            <div class="d-flex justify-content-between align-items-center h-pointer"
+                                 data-bs-toggle="collapse" data-bs-target="#country"
+                                 aria-controls="country">
+                                <div class="">Country</div>
+                                <div>
+                                    <i class="bi bi-chevron-down"></i>
+                                </div>
+                            </div>
+                            <div class="collapse collapsing expand" id="country">
+                                <div>
+                                    @foreach($countries as $country)
+                                        <div class="form-check">
+                                            <input class="form-check-input h-pointer" type="checkbox" name="country[]"
+                                                   id="country_{{$country->id}}"
+                                                   value="{{$country->id}}"
+                                                {{in_array($country->id, $f_country) ? 'checked' : ''}}
+                                            >
+                                            <label class="form-check-label h-pointer" for="country_{{$country->id}}">
+                                                {{$country->country_name}}
+                                            </label>
+                                        </div>
+                                    @endforeach
                                 </div>
                             </div>
                         </div>
@@ -159,8 +207,8 @@
                     </div>
 
                     <div class="w-100 d-flex justify-content-between align-items-center">
-                        <a href="" class="btn btn-dark w-45">Reset</a>
-                        <button class="btn btn-primary w-45">Apply</button>
+                        <a href="{{route('product')}}" class="btn btn-dark rounded-5 w-45">Reset</a>
+                        <button class="btn btn-primary rounded-5 w-45">Apply</button>
                     </div>
                 </form>
             </div>
@@ -171,36 +219,39 @@
                 <div class="container text-center">
                     <div class="row row-cols-3">
                         @foreach($products as $product)
-                            <div class="col border">
+                            <div class="col border bg-white">
                                 <div
                                     class="position-relative overflow-hidden d-flex justify-content-center">
-                                    <img
-                                        src="{{$product->image}}"
-                                        height="200px"
-                                        class="p-1 mt-5"
-                                        alt="product_image">
+                                    <a href="/product/{{$product->id}}">
+                                        <img
+                                            src="{{$product->image}}"
+                                            height="200px"
+                                            class="p-1 mt-5"
+                                            alt="product_image">
+                                    </a>
                                     <div
-                                        class="w-100 mt-3 position-absolute d-flex justify-content-between">
-                                        <div class="p-2 bg-light border rounded-5">
-                                            <i class="py-3 bi bi-star text-warning"></i>
-                                        </div>
+                                        class="w-100 mt-3 position-absolute d-flex justify-content-end">
                                         <div class="d-flex align-items-center">
                                             <i class="bi bi-cake2 p-1"></i>
                                             <span class="p-1">
-                                                {{$product->age_id}}
+                                                {{$product->age_name}}
                                             </span>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="mt-5">
+                                <div class="mt-5 text-capitalize">
                                     {{$product->product_name}}
                                 </div>
                                 <div class="mt-5 mb-3 d-flex justify-content-between align-items-center">
-                                    <div class="w-50 text-start text-success fw-bold">${{$product->price}}</div>
-                                    <div class="w-50 text-end">
+                                    <div class="text-start text-success fw-bold">${{$product->price}}</div>
+                                    <div class="d-flex text-end">
+                                        <a href="" class="btn btn-light border rounded-5 me-2">
+                                            <i class="p-2 bi bi-bag"></i>
+                                            <span class="pe-2">Add to cart</span>
+                                        </a>
                                         <a href="" class="btn btn-primary rounded-5">
                                             <i class="p-2 bi bi-bag"></i>
-                                            <span>Add to cart</span>
+                                            <span class="pe-2">Buy now</span>
                                         </a>
                                     </div>
                                 </div>

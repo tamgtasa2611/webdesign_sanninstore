@@ -26,6 +26,9 @@ Route::get('/home', function () {
 
 Route::get('/product', [ProductController::class, 'index'])->name('product');
 
+//show 1 product
+Route::get('/product/{id}', [ProductController::class, 'show'])->name('product.details');
+
 Route::get('/discover', function () {
     return view('customers.products.index');
 })->name('discover');
