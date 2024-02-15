@@ -7,6 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Country extends Model
 {
-    protected $fillable = ['country_name'];
     use HasFactory;
+
+    protected $fillable = ['country_name'];
+    protected $table = 'countries';
+    public function scopeFilter($query, array $filters)
+    {
+        if ($filters['search'] ?? false) {
+            $query->where('country_name', 'like', '%' . request('search') . '%');
+        }
+    }
+
 }

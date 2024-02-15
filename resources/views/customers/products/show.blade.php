@@ -3,9 +3,9 @@
     @include('layouts/nav')
     <div class="container bg-white h-80 mt-5 rounded-5 d-flex justify-content-center align-items-center">
         {{--       IMG--}}
-        <div class="w-50 d-flex align-items-center justify-content-center h-100">
+        <div class="w-50 d-flex align-items-center justify-content-center h-100 overflow-hidden">
             <img src="{{asset($product->image)}}" alt="product_image"
-                 class="w-70">
+                 class="h-70">
         </div>
         {{--        MAIN--}}
         <div class="w-50">

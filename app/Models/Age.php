@@ -7,6 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Age extends Model
 {
-    protected $fillable = ['age_name'];
     use HasFactory;
+
+    protected $fillable = ['age_name'];
+    protected $table = 'ages';
+
+    public function scopeFilter($query, array $filters)
+    {
+        if ($filters['search'] ?? false) {
+            $query->where('age_name', 'like', '%' . request('search') . '%');
+        }
+    }
+
 }

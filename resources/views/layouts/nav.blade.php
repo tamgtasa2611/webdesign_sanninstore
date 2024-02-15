@@ -45,11 +45,6 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/wishlist">
-                        <i class="bi bi-star"></i>
-                    </a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link" href="{{route('cart')}}">
                         <i class="bi bi-bag"></i>
                     </a>

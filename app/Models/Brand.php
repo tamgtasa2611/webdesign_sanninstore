@@ -7,6 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Brand extends Model
 {
-    protected $fillable = ['brand_name'];
     use HasFactory;
+
+    protected $fillable = ['brand_name'];
+    protected $table = 'brands';
+
+    public function scopeFilter($query, array $filters)
+    {
+        if ($filters['search'] ?? false) {
+            $query->where('brand_name', 'like', '%' . request('search') . '%');
+        }
+    }
+
 }

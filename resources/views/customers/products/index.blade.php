@@ -14,7 +14,7 @@
                 <label for="sorting" class="w-50 d-flex align-items-center justify-content-center px-1">
                     Sort by
                 </label>
-                <select class="form-select" aria-label="sorting" id="sorting" name="sorting"
+                <select class="form-select rounded-5" aria-label="sorting" id="sorting" name="sorting"
                         onchange="this.form.submit()">
                     <option value="default" {{$sorting == 'default' ? 'selected' : ''}}>Default
                     </option>
@@ -151,7 +151,7 @@
                             <div class="d-flex justify-content-between align-items-center h-pointer"
                                  data-bs-toggle="collapse" data-bs-target="#age"
                                  aria-controls="age">
-                                <div class="">Ages</div>
+                                <div class="">Age</div>
                                 <div>
                                     <i class="bi bi-chevron-down"></i>
                                 </div>
@@ -181,7 +181,7 @@
                             <div class="d-flex justify-content-between align-items-center h-pointer"
                                  data-bs-toggle="collapse" data-bs-target="#country"
                                  aria-controls="country">
-                                <div class="">Country</div>
+                                <div class="">Country of origin</div>
                                 <div>
                                     <i class="bi bi-chevron-down"></i>
                                 </div>
