@@ -7,6 +7,7 @@
     <title>Document</title>
 </head>
 <body>
+    <a href="{{route('products.create')}}">Create</a>
     <table>
         <tr>
             <td>ID</td>
@@ -51,7 +52,7 @@
                 @endforeach</td>
                 <td><a href="{{route('products.edit',['product' => $product])}}">Edit</a></td>
                 <td>
-                    <form method="post" action="{{ route('products.destroy', $product) }}">
+                    <form method="post" action="{{ route('products.destroy',['products' => $product])}}">
                         @csrf
                         @method('DELETE')
                         <button>Delete</button>

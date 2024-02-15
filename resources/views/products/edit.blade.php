@@ -11,7 +11,7 @@
     
  <h1>Editing</h1>
     <a href="{{route('products.index')}}"></a>
-    <form action="{{ route('products.update',['product' => $product]) }}" method="POST">
+    <form action="{{ route('products.update',['product' => $product]) }}" method="POST" enctype="multipart/form-data">
      @csrf
     <!--put để update-->
     @method('PUT')
@@ -31,10 +31,10 @@
             <label for="">Description</label>
             <input type="text" name="description" placeholder="description"value="{{$product -> description}}">
            </div>
-           {{-- <div>
+            <div>
             <label for="">Image</label>
-            <input type="number" name="image" placeholder="image">
-           </div> --}}
+            <input type="file" name="image" placeholder="image">
+           </div> 
            <div>
             {{-- <label for="">Categories</label>
             <br>

@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\category;
-use App\Models\Product;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Models\Age;
 use App\Models\Brand;
 use App\Models\Country;
+use App\Models\Product;
+use App\Models\category;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
+
 class ProductController extends Controller
 {
     public function index(Request $request)
@@ -133,16 +135,7 @@ class ProductController extends Controller
             'product' => $product
         ]);
     }
-    // public function index(){
-    //     return view('products.index');
-    // }
 
-    // public function create(){
-    //     return view('products.create');
-    // }
-    // public function store(Request $request){
-    //     dd($request);
-    // }
     public function indexAdmins(){
         $products = Product::all();
         $categories = Category::all();
@@ -155,44 +148,90 @@ class ProductController extends Controller
      public function create(){
          return view('products.create');
      }
+
+
      public function store(Request $request){
         $data = $request-> validate([
         'product_name' => 'required',
         'quantity' => 'required|numeric',
         'price' => 'required|numeric',
         'description' => 'required',
-        'image' => 'required',
+        'image' => 'required|mimes:png,jpg,jpeg,webp',
         'category_id' => 'required|numeric',
         'country_id' => 'required|numeric',
         'age_id' => 'required|numeric',
         'brand_id' => 'required|numeric',
     ]);
-        $newProduct = Product::create($data);
+        if ($request -> has('image')) {
+            $file = $request -> file('image');
+            $extension = $file ->getClientOriginalExtension();
+            $filename = time() . '.' . $extension;
+            $path = 'images/products/';
+            $file -> move($path,$filename);
+
+        }
+
+        Product::create([
+            'product_name' => $request -> product_name,
+            'quantity' => $request -> quantity,
+            'price' => $request -> price,
+            'description' => $request -> description,
+            'image' =>  $path.$filename,
+            'category_id' => $request -> category_id,
+            'country_id' => $request -> country_id,
+            'age_id' => $request -> age_id,
+            'brand_id' => $request -> brand_id,
+        ]);
         return redirect(route('products.index'));
     }
+
+
     public function edit(Product $product){
         return view('products.edit' , ['product' => $product]);
     }
-    public function update(Product $product,Request $request){
-        $data = $request-> validate([
-            'product_name' => 'required',
-            'quantity' => 'required|numeric',
-            'price' => 'required|numeric',
-            'description' => 'required',
-            // 'image' => 'required',
-            'category_id' => 'required|numeric',
-            'country_id' => 'required|numeric',
-            'age_id' => 'required|numeric',
-            'brand_id' => 'required|numeric',
-        ]);
 
-        $product -> update($data);
+
+    public function update(Product $product,Request $request){
+         $data = $request-> validate([
+        'product_name' => 'required',
+        'quantity' => 'required|numeric',
+        'price' => 'required|numeric',
+        'description' => 'required',
+        'image' => 'required|mimes:png,jpg,jpeg,webp',
+        'category_id' => 'required|numeric',
+        'country_id' => 'required|numeric',
+        'age_id' => 'required|numeric',
+        'brand_id' => 'required|numeric',
+    ]);
+
+        if ($request -> has('image')) {
+            $file = $request -> file('image');
+            $extension = $file ->getClientOriginalExtension();
+            $filename = time() . '.' . $extension;
+            $path = 'images/products/';
+            $file -> move($path,$filename);
+            if (file_exists($product->image)) {
+                unlink($product->image);
+            }
+        }
+
+        $product -> update([
+            'product_name' => $request -> product_name,
+            'quantity' => $request -> quantity,
+            'price' => $request -> price,
+            'description' => $request -> description,
+            'image' =>  $path.$filename,
+            'category_id' => $request -> category_id,
+            'country_id' => $request -> country_id,
+            'age_id' => $request -> age_id,
+            'brand_id' => $request -> brand_id,
+        ]);
         return redirect(route('products.index'));
     }
-    public function destroy(Product $product, Request $request)
+    public function destroy(Product $products, Request $request)
     {
         //Xóa bản ghi được chọn
-        $product->delete();
+        $products->delete();
         //Quay về danh sách
         return redirect(route('products.index'));
     }

@@ -9,7 +9,7 @@
 <body>
  {{-- product_name, quantity, price, description, image, category_id, country_id, age_id, brand_id --}}
     
-    <form action="{{route('products.store')}}" method="POST">
+    <form action="{{route('products.store')}}" method="POST" enctype="multipart/form-data">
      @csrf
      @method('post')
 
