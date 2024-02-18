@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Middleware\CheckLoginCustomer;
-
+use App\Models\Customer;
 
 /*
 |--------------------------------------------------------------------------
