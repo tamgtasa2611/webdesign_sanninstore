@@ -8,7 +8,9 @@ use App\Models\Category;
 use App\Models\Country;
 use App\Models\Age;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
 
 class ProductController extends Controller
 {
@@ -77,26 +79,17 @@ class ProductController extends Controller
                 $orderDirection = "desc";
                 break;
         }
-
-//        cach 1 loi filter
-//        $products = Product::all()->filter(request('search'))->paginate(3);
-        $products = DB::table('products')
-            ->join('brands', 'products.brand_id', 'brands.id')
-            ->join('categories', 'products.category_id', 'categories.id')
-            ->join('ages', 'products.age_id', 'ages.id')
-            ->join('countries', 'products.country_id', 'countries.id')
-            ->select('products.*', 'brands.brand_name', 'categories.category_name', 'ages.age_name', 'countries.country_name')
+        
+        $products = Product::with('age')
             ->whereBetween('price', [$price_1, $price_2])
             ->whereIn('brand_id', $brand)
             ->whereIn('category_id', $category)
-            ->whereIn('country_id', $country)
             ->whereIn('age_id', $age)
+            ->whereIn('country_id', $country)
             ->where('product_name', 'like', '%' . $search . '%')
             ->orderBy($orderBy, $orderDirection)
             ->paginate(6)
             ->withQueryString();
-//        cach 3 khong join duoc
-//        $products = Product::paginate(6);
 
         $categories = Category::all();
         $brands = Brand::all();
@@ -122,18 +115,144 @@ class ProductController extends Controller
 
     public function show(int $id)
     {
-        $product = DB::table('products')
-            ->join('brands', 'products.brand_id', 'brands.id')
-            ->join('categories', 'products.category_id', 'categories.id')
-            ->join('ages', 'products.age_id', 'ages.id')
-            ->join('countries', 'products.country_id', 'countries.id')
-            ->select('products.*', 'brands.brand_name', 'categories.category_name', 'ages.age_name', 'countries.country_name')
-            ->where('products.id', '=', $id)
+        $product = Product::with('brand')
+            ->with('category')
+            ->with('age')
+            ->with('country')
+            ->where('id', $id)
             ->first();
 
         return view('customers.products.show', [
             'product' => $product
         ]);
+    }
+
+    public function cart()
+    {
+        return view('customers.carts.cart');
+    }
+
+    public function cartAjax()
+    {
+        return view('customers.carts.cartAjax');
+    }
+
+    public function addToCart(int $id)
+    {
+        $product = Product::with('brand')
+            ->with('category')
+            ->with('age')
+            ->with('country')
+            ->where('id', $id)
+            ->first();
+
+//        neu da co cart
+        if (Session::exists('cart')) {
+//            lay cart hien tai
+            $cart = Session::get('cart');
+//            neu san pham da co trong cart => +1 so luong
+            if (isset($cart[$product->id])) {
+                $cart[$product->id]['quantity']++;
+            } else {
+//                them sp vao cart
+                $cart = Arr::add($cart, $product->id, [
+                    'image' => $product->image,
+                    'product_name' => $product->product_name,
+                    'price' => $product->price,
+                    'quantity' => 1,
+                ]);
+            }
+        } else {
+//            tao cart moi
+            $cart = array();
+            $cart = Arr::add($cart, $product->id, [
+                'image' => $product->image,
+                'product_name' => $product->product_name,
+                'price' => $product->price,
+                'quantity' => 1,
+            ]);
+        }
+//        nem cart len session
+        Session::put(['cart' => $cart]);
+
+        return Redirect::route('product.cart');
+    }
+
+    public function addToCartAjax(int $id)
+    {
+        $product = Product::with('brand')
+            ->with('category')
+            ->with('age')
+            ->with('country')
+            ->where('id', $id)
+            ->first();
+
+//        neu da co cart
+        if (Session::exists('cart')) {
+//            lay cart hien tai
+            $cart = Session::get('cart');
+//            neu san pham da co trong cart => +1 so luong
+            if (isset($cart[$product->id])) {
+                $cart[$product->id]['quantity']++;
+            } else {
+//                them sp vao cart
+                $cart = Arr::add($cart, $product->id, [
+                    'image' => $product->image,
+                    'product_name' => $product->product_name,
+                    'price' => $product->price,
+                    'quantity' => 1,
+                ]);
+            }
+        } else {
+//            tao cart moi
+            $cart = array();
+            $cart = Arr::add($cart, $product->id, [
+                'image' => $product->image,
+                'product_name' => $product->product_name,
+                'price' => $product->price,
+                'quantity' => 1,
+            ]);
+        }
+//        nem cart len session
+        Session::put(['cart' => $cart]);
+
+        return Redirect::route('product.cartAjax');
+    }
+
+    public function updateCartQuantity(int $id, Request $request)
+    {
+        //        lay cart hien tai
+        $cart = Session::get('cart');
+//        cap nhat so luong
+        $cart[$id]['quantity'] = $request->buy_quantity;
+        //        cap nhat cart moi
+        Session::put(['cart' => $cart]);
+        return Redirect::back();
+    }
+
+    public function deleteFromCart(Request $request)
+    {
+//        lay cart hien tai
+        $cart = Session::get('cart');
+//        xoa id cua product can xoa
+        Arr::pull($cart, $request->id);
+//        cap nhat cart moi
+        Session::put(['cart' => $cart]);
+
+        return Redirect::back();
+    }
+
+    public function deleteAllFromCart()
+    {
+//       xoa cart
+        Session::forget('cart');
+
+        return Redirect::back();
+    }
+
+    public function checkout()
+    {
+        return view('customers.carts.checkout');
     }
 
 //    ADMIN

@@ -1,8 +1,21 @@
-let expandElements = document.querySelectorAll(".filter-item");
-expandElements.forEach((div) => {
-    let expandDiv = div.querySelector(".expand")
-    let expandIcon = div.querySelector(".expand-icon");
-    div.addEventListener("click", () => {
-        expandIcon.classList.toggle("rotate180");
-    })
-})
+// add to cart
+$("#addToCartAjax").click(function (ev) {
+    // lay id
+    let productId = window.location.pathname.split('/')[2];
+    // lay size
+    $.ajax({
+        type: "GET",
+        url: "addToCartAjax/" + productId,
+        data: {},
+        success: function (data) {
+
+            // Ajax call completed successfully
+            alert("Add item to cart successfully");
+        },
+        error: function (data) {
+
+            // Some error in ajax call
+            alert("Error");
+        }
+    });
+});

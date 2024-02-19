@@ -2,14 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Customer;
-use Illuminate\Support\Arr;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\View;
 use App\Requests\StoreCustomerRequest;
 use App\Requests\UpdateCustomerRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
+use App\Models\Customer;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 
 
@@ -113,7 +112,7 @@ class CustomerController extends Controller
         $account = $request->only(['email', 'password']);
         $check = Auth::guard('customer')->attempt($account);
 
-         if ($check) {
+        if ($check) {
             //Lấy thông tin của customer đang login
             $customer = Auth::guard('customer')->user();
             //Cho login
@@ -121,10 +120,10 @@ class CustomerController extends Controller
             //Ném thông tin customer đăng nhập lên session
             session(['customer' => $customer]);
             return Redirect::route('profile');
-         } else {
-             //cho quay về trang login
-             return Redirect::back();
-         }
+        } else {
+            //cho quay về trang login
+            return Redirect::back();
+        }
     }
 
     public function logout()

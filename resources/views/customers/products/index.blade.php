@@ -234,7 +234,7 @@
                                         <div class="d-flex align-items-center">
                                             <i class="bi bi-cake2 p-1"></i>
                                             <span class="p-1">
-                                                {{$product->age_name}}
+                                                {{$product->age->age_name}}
                                             </span>
                                         </div>
                                     </div>
@@ -245,13 +245,9 @@
                                 <div class="mt-5 mb-3 d-flex justify-content-between align-items-center">
                                     <div class="text-start text-success fw-bold">${{$product->price}}</div>
                                     <div class="d-flex text-end">
-                                        <a href="" class="btn btn-light border rounded-5 me-2">
-                                            <i class="p-2 bi bi-bag"></i>
-                                            <span class="pe-2">Add to cart</span>
-                                        </a>
-                                        <a href="" class="btn btn-primary rounded-5">
-                                            <i class="p-2 bi bi-bag"></i>
-                                            <span class="pe-2">Buy now</span>
+                                        <a href="{{route('product.details', $product->id)}}"
+                                           class="btn btn-light border rounded-5 ">
+                                            <span class="px-2">View details</span>
                                         </a>
                                     </div>
                                 </div>

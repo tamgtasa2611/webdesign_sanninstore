@@ -11,6 +11,10 @@ class Country extends Model
 
     protected $fillable = ['country_name'];
     protected $table = 'countries';
+    public function product()
+    {
+        return $this->hasMany(Product::class);
+    }
     public function scopeFilter($query, array $filters)
     {
         if ($filters['search'] ?? false) {

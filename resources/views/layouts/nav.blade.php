@@ -45,7 +45,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{route('cart')}}">
+                    <a class="nav-link" href="{{route('product.cart')}}">
                         <i class="bi bi-bag"></i>
                     </a>
                 </li>

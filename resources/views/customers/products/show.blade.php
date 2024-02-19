@@ -13,8 +13,7 @@
             <div class="w-100 d-flex justify-content-between align-items-center mb-3">
                 <div class="fs-3 fw-bold text-capitalize w-50">{{$product->product_name}}</div>
                 <div>
-                    <div class="btn rounded-5 btn-dark border">{{$product->category_name}}</div>
-                    <div class="btn rounded-5 btn-dark border">{{$product->age_name}}</div>
+                    <div class="btn rounded-5 btn-dark border">{{$product->category->category_name}}</div>
                 </div>
             </div>
             {{--            BODY--}}
@@ -36,11 +35,15 @@
             <table class="table table-bordered text-center w-100 my-3">
                 <tr>
                     <td class="w-25">Brand</td>
-                    <td class="bg-white">{{$product->brand_name}}</td>
+                    <td class="bg-white">{{$product->brand->brand_name}}</td>
                 </tr>
                 <tr>
                     <td class="w-25">Country of origin</td>
-                    <td class="bg-white">{{$product->country_name}}</td>
+                    <td class="bg-white">{{$product->country->country_name}}</td>
+                </tr>
+                <tr>
+                    <td class="w-25">Age</td>
+                    <td class="bg-white">{{$product->age->age_name}}</td>
                 </tr>
                 <tr>
                     <td class="w-25">In stock</td>
@@ -49,25 +52,27 @@
             </table>
             {{--BUTTON--}}
             <form action="" class="d-flex justify-content-between align-items-center w-100">
-                <div class="d-flex align-items-center w-50">
-                    <span class="me-3">
-                        Buy quantity
-                    </span>
-                    <input type="number" class="form-control rounded-5 w-25" name="quantity" id="quantity"
-                           step="1" value="" min="0" max="{{$product->quantity}}" required>
+                <div class="d-flex align-items-center w-25">
+                    <a href="{{route('product')}}" class="text-decoration-none d-flex align-items-center">
+                        <i class="bi bi-arrow-left me-2"></i>
+                        Back
+                    </a>
                 </div>
-                <div class="w-50 text-end">
-                    <button class="btn btn-light border rounded-5 me-2">
-                        <i class="p-2 bi bi-bag"></i>
+                <div class="w-75 d-flex justify-content-end">
+                    <a class="btn btn-light border rounded-5"
+                       id="addToCartAjax">
+                        <i class="p-2 bi bi-cart"></i>
                         <span class="pe-2">Add to cart</span>
-                    </button>
-                    <button class="btn btn-primary rounded-5">
+                    </a>
+                    <a class="btn btn-primary rounded-5 ms-3"
+                       href="{{route('product.addToCart', $product->id)}}">
                         <i class="p-2 bi bi-bag"></i>
                         <span class="pe-2">Buy now</span>
-                    </button>
+                    </a>
                 </div>
             </form>
         </div>
     </div>
     @include('layouts/footer')
 </x-layout>
+<script src="{{asset('frontend/js/product.js')}}"></script>
