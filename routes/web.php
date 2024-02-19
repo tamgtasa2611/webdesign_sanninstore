@@ -30,6 +30,12 @@ Route::get('/product', [ProductController::class, 'index'])->name('product');
 //show 1 product
 Route::get('/product/{id}', [ProductController::class, 'show'])->name('product.details');
 
+Route::get('/products',[ProductController::class,'indexAdmins'])->name('products.index');
+Route::get('/products/create',[ProductController::class,'create']) ->name('products.create');
+Route::post('/products',[ProductController::class,'store']) -> name('products.store');
+Route::get('/products/{product}/edit',[ProductController::class,'edit']) -> name('products.edit');
+Route::put('/products/{product}/update',[ProductController::class,'update']) -> name('products.update');
+Route::delete('/{products}', [ProductController::class, 'destroy'])->name('products.destroy');
 
 Route::get('/discover', function () {
     return view('customers.products.discover');
