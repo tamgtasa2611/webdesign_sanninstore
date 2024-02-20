@@ -28,7 +28,7 @@
                     </a>
                 </div>
                 <h5 class="mt-3">Auspicious Dragon</h5>
-                <p>Mark the Year of the Dragon with this colorful LEGO® set</p>
+                <p>Mark the Year of the Dragon with this colorful LEGO® se</p>
             </div>
             <div class="w-20 text-center home-product-card">
                 <div class="w-100 bg-warning rounded">
