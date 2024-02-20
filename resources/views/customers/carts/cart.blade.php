@@ -81,11 +81,13 @@
                         </a>
                     </div>
                     <div class="p-2 px-3">
+                        @if(\Illuminate\Support\Facades\Session::get('cart') != null)
                         <a href="{{route('product.deleteAllFromCart')}}"
                            class="text-danger text-decoration-none d-flex align-items-center">
                             Delete cart
                             <i class="bi bi-trash-fill ms-2"></i>
                         </a>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -124,9 +126,11 @@
                     </div>
                 </div>
                 <div class="d-flex align-items-center justify-content-center">
+                    @if(\Illuminate\Support\Facades\Session::get('cart') != null)
                     <a class="btn btn-dark rounded-5" href="{{route('checkout')}}">
                         Continue to checkout
                     </a>
+                    @endif
                 </div>
             </div>
         </div>
