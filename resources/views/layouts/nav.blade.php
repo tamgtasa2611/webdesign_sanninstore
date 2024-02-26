@@ -1,4 +1,4 @@
-<nav class="navbar bg-warning navbar-expand-lg bd-navbar fixed-top">
+<nav class="navbar bg-primary bg-gradient nav-underline navbar-expand-lg bd-navbar fixed-top">
     <div class="container-xxl bd-gutter flex-wrap flex-lg-nowrap text-uppercase px-0">
         <a class="navbar-brand" href="/">
             <img src="{{asset('images/brand.png')}}" alt="brand"
@@ -9,7 +9,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0 fw-medium">
                 <li class="nav-item">
                     <a class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}" aria-current="page"
                        href="{{route('home')}}">Home</a>
@@ -29,7 +29,7 @@
                 </li>
             </ul>
             <form class="d-flex search-form mb-0" role="search">
-                <div class="input-group input-group-sm">
+                <div class="input-group input-group-sm w-auto">
                     <input class="form-control border-white" name="search" type="search" placeholder="Type to search..."
                            aria-label="Search"
                            value="<?= isset($_GET['search']) ? $_GET['search'] : '' ?>">

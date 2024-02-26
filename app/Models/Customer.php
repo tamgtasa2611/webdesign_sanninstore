@@ -17,11 +17,8 @@ class Customer extends Model implements \Illuminate\Contracts\Auth\Authenticatab
     protected $fillable = ['first_name', 'last_name', 'email', 'password', 'phone_number', 'address'];
     protected $table = 'customers';
 
-    public function scopeFilter($query, array $filters)
+    public function orders()
     {
-        if ($filters['search'] ?? false) {
-            $query->where('first_name', 'like', '%' . request('search') . '%')
-                ->orWhere('last_name', 'like', '%' . request('search') . '%');
-        }
+        return $this->hasMany(Order::class);
     }
 }

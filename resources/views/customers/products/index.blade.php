@@ -1,15 +1,16 @@
 @vite(["resources/sass/app.scss", "resources/js/app.js"])
 <x-layout>
     @include('layouts/nav')
-    <div class="d-flex justify-content-between mb-3">
-        <div class="w-100 text-capitalize text-center fs-3 fw-bold bg-dark text-white py-4">
-            {{$search != "" ? 'Search results for "' . $search . '"' : 'Sannin Store Lego Products'}}
-        </div>
+    <div class="fs-4 bg-dark text-light fw-bold d-flex justify-content-center align-items-center py-4">
+        {{$search != "" ? 'Search results for "' . $search . '"' : '⭐ Sannin Store Lego Products ⭐'}}
     </div>
     <div class="container-fluid fs-6">
         {{--                SORTING--}}
-        <div class="d-flex justify-content-end align-items-center">
-            <form action="" class="d-flex" style="width: 250px">
+        <div class="w-100 d-flex justify-content-between align-items-center my-3">
+            <div class="">
+                Filter
+            </div>
+            <form action="" class="d-flex mb-0" style="width: 250px">
                 {{--                select--}}
                 <label for="sorting" class="w-50 d-flex align-items-center justify-content-center px-1">
                     Sort by
