@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Brand;
+use App\Models\Customer;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\Country;
 use App\Models\Age;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 
@@ -79,7 +81,7 @@ class ProductController extends Controller
                 $orderDirection = "desc";
                 break;
         }
-        
+
         $products = Product::with('age')
             ->whereBetween('price', [$price_1, $price_2])
             ->whereIn('brand_id', $brand)
@@ -132,11 +134,6 @@ class ProductController extends Controller
         return view('customers.carts.cart');
     }
 
-    public function cartAjax()
-    {
-        return view('customers.carts.cartAjax');
-    }
-
     public function addToCart(int $id)
     {
         $product = Product::with('brand')
@@ -180,22 +177,35 @@ class ProductController extends Controller
 
     public function addToCartAjax(int $id)
     {
-        $product = Product::with('brand')
-            ->with('category')
-            ->with('age')
-            ->with('country')
-            ->where('id', $id)
-            ->first();
+        if (!Auth::guard('customer')->check()) {
+            return Redirect::route('customer.login');
+        } else {
+            $product = Product::with('brand')
+                ->with('category')
+                ->with('age')
+                ->with('country')
+                ->where('id', $id)
+                ->first();
 
 //        neu da co cart
-        if (Session::exists('cart')) {
+            if (Session::exists('cart')) {
 //            lay cart hien tai
-            $cart = Session::get('cart');
+                $cart = Session::get('cart');
 //            neu san pham da co trong cart => +1 so luong
-            if (isset($cart[$product->id])) {
-                $cart[$product->id]['quantity']++;
-            } else {
+                if (isset($cart[$product->id])) {
+                    $cart[$product->id]['quantity']++;
+                } else {
 //                them sp vao cart
+                    $cart = Arr::add($cart, $product->id, [
+                        'image' => $product->image,
+                        'product_name' => $product->product_name,
+                        'price' => $product->price,
+                        'quantity' => 1,
+                    ]);
+                }
+            } else {
+//            tao cart moi
+                $cart = array();
                 $cart = Arr::add($cart, $product->id, [
                     'image' => $product->image,
                     'product_name' => $product->product_name,
@@ -203,20 +213,11 @@ class ProductController extends Controller
                     'quantity' => 1,
                 ]);
             }
-        } else {
-//            tao cart moi
-            $cart = array();
-            $cart = Arr::add($cart, $product->id, [
-                'image' => $product->image,
-                'product_name' => $product->product_name,
-                'price' => $product->price,
-                'quantity' => 1,
-            ]);
-        }
 //        nem cart len session
-        Session::put(['cart' => $cart]);
+            Session::put(['cart' => $cart]);
 
-        return Redirect::route('product.cartAjax');
+            return Redirect::route('product.cart');
+        }
     }
 
     public function updateCartQuantity(int $id, Request $request)
@@ -252,7 +253,11 @@ class ProductController extends Controller
 
     public function checkout()
     {
-        return view('customers.carts.checkout');
+        $customer_id = Auth::guard('customer')->id();
+        $customer = Customer::find($customer_id);
+        return view('customers.carts.checkout', [
+            'customer' => $customer
+        ]);
     }
 
 //    ADMIN

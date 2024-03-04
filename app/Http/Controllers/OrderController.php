@@ -60,10 +60,17 @@ class OrderController extends Controller
         }
 
         Session::forget('cart');
-        return Redirect::route('ordersHistory')->with('success', 'Order created successfully!');
+        return Redirect::route('orderHistory')->with('success', 'Order created successfully!');
 //        } else {
 //            dd("loi");
 ////            return Redirect::route('checkout')->with('error', 'Create order failed!');
 //        }
+    }
+
+    public function cancelOrder(Order $order)
+    {
+        $id = $order->id;
+        $order->delete($id);
+        return to_route('orderHistory')->with('success', 'Cancel order successfully!');
     }
 }

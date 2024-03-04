@@ -17,8 +17,8 @@
             </div>
             <div class="d-flex w-100 h-100 flex-column">
                 @foreach($orders as $order)
-                    <div class="w-100 h-50 d-flex justify-content-between border rounded bg-light mb-3 p-3">
-                        <div class="h-100 w-75">
+                    <div class="w-100 h-50 d-flex justify-content-between align-items-center border rounded bg-light mb-3 p-3">
+                        <div class="h-100 w-75 d-flex flex-column justify-content-center">
                             <div class="fw-bold fst-italic">
                                 @switch($order->order_status)
                                     @case(0)
@@ -43,14 +43,11 @@
                                 Order date: {{$orderDate}}
                             </div>
                             <div>
-                                Total: <span class="text-success fw-bold">${{$orderTotal}}</span>
-                            </div>
-                            <div>
                                 Payment method: Pay on delivery
                             </div>
                         </div>
                         <div class="h-100 w-25 d-flex align-items-center justify-content-end">
-                            <a href="" class="btn btn-primary">
+                            <a href="{{route('orderDetail', $order)}}" class="btn btn-primary">
                                 View order
                             </a>
                         </div>

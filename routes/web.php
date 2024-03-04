@@ -44,7 +44,9 @@ Route::middleware(CheckLoginCustomer::class)->group(function () {
     Route::get('/profile', [CustomerController::class, 'editProfile'])->name('profile');
     Route::put('/profile', [CustomerController::class, 'updateProfile'])->name('profile.update');
 
-    Route::get('/orders_history', [CustomerController::class, 'showOrdersHistory'])->name('ordersHistory');
+    Route::get('/orders_history', [CustomerController::class, 'showOrderHistory'])->name('orderHistory');
+    Route::get('/order_detail/{order}', [CustomerController::class, 'orderDetail'])->name('orderDetail');
+    Route::get('/cancel_order/{order}', [OrderController::class, 'cancelOrder'])->name('cancelOrder');
 
     Route::get('/change_password', [CustomerController::class, 'editPassword'])->name('pwd.edit');
     Route::put('/change_password', [CustomerController::class, 'updatePassword'])->name('pwd.update');
