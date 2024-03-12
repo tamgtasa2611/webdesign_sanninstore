@@ -37,13 +37,14 @@ class CustomerController extends Controller
             $array = Arr::add($array, 'first_name', $request->first_name);
             $array = Arr::add($array, 'last_name', $request->last_name);
             $array = Arr::add($array, 'email', $request->email);
-            $array = Arr::add($array, 'password', $request->password);
+            $array = Arr::add($array, 'password', Hash::make($request->password));
             $array = Arr::add($array, 'phone_number', $request->phone_number);
             $array = Arr::add($array, 'address', $request->address);
+            $array = Arr::add($array, 'status', $request->status);
             //Lấy dữ liệu từ form và lưu lên db
             Customer::create($array);
 
-            return Redirect::route('admin/customer')->with('success', 'Add a customer successfully!');
+            return Redirect::route('admin.customer')->with('success', 'Add a customer successfully!');
         }
     }
 
@@ -66,15 +67,31 @@ class CustomerController extends Controller
         $array = Arr::add($array, 'address', $request->address);
         $customer->update($array);
         //Quay về danh sách
-        return Redirect::route('admin/customer')->with('success', 'Edit a customer successfully!');
+        return Redirect::route('admin.customer')->with('success', 'Edit a customer successfully!');
     }
 
-    public function destroy(Customer $customer)
+    public function destroy(Customer $customers)
     {
         //Xóa bản ghi được chọn
-        $customer->delete();
+        $customers->delete();
         //Quay về danh sách
-        return Redirect::route('admin/customer')->with('success', 'Delete a customer successfully!');
+        return Redirect::route('admin.customer')->with('success', 'Delete a customer successfully!');
+    }
+
+    public function editStatus(Customer $customer)
+    {
+        return view("admins.customer_manager.edit-status", [
+            "customer" => $customer
+        ]);
+    }
+
+    public function updateStatus(Request $request, Customer $customer )
+    {
+        $array = [];
+        $array = Arr::add($array, 'status', $request->status);
+        $customer->update($array);
+        //Quay về danh sách
+        return Redirect::route('admin.customer')->with('success', "Edit Customer's Status successfully!");
     }
 
     //trang customer

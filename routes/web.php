@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CustomerController;
@@ -73,17 +74,115 @@ Route::get('/forgot_password', [CustomerController::class, 'forgotPassword'])->n
 
 
 //ADMIN
-Route::get('/admin/customer', [CustomerController::class, 'show'])->name('admin/customer');
-Route::get('/create', [CustomerController::class, 'create'])->name('customer/create');
-Route::post('/create', [CustomerController::class, 'store'])->name('customer/store');
-//show edit form
-Route::get('/{customer}/edit', [CustomerController::class, 'edit'])->name('customer/edit');
-Route::put('/{customer}/edit', [CustomerController::class, 'update'])->name('customer/update');
-Route::delete('/{customer}', [CustomerController::class, 'destroy'])->name('customer/destroy');
+
 //PRODUCTS
-Route::get('/products', [ProductController::class, 'indexAdmins'])->name('products.index');
-Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
-Route::post('/products', [ProductController::class, 'store'])->name('products.store');
-Route::get('/products/{product}/edit', [ProductController::class, 'edit'])->name('products.edit');
-Route::put('/products/{product}/update', [ProductController::class, 'update'])->name('products.update');
-Route::delete('/{products}', [ProductController::class, 'destroy'])->name('products.destroy');
+
+
+Route::prefix('admin/dashboard')->group(function () {
+    Route::get('/', [HomeController::class, 'index'])->name('dashboard.index');
+});
+
+
+// -------- End Dashboard manager ----------
+
+
+// -------- Start Product manager ----------
+Route::prefix('admin/product')->group(function () {
+
+    Route::get('/', [ProductController::class, 'show2'])->name('admin.product');
+    Route::get('/detail/{product}', [ProductController::class, 'showDetail'])->name('product.detail');
+//
+////show create form
+    Route::get('/create', [ProductController::class, 'create'])->name('product.create');
+    Route::post('/create', [ProductController::class, 'store'])->name('product.store');
+//show edit form
+    Route::get('/{product}/edit', [ProductController::class, 'edit'])->name('product.edit');
+    Route::put('/{product}/edit', [ProductController::class, 'update'])->name('product.update');
+    Route::delete('/{product}', [ProductController::class, 'destroy'])->name('product.destroy');
+
+});
+// -------- End Product manager ----------
+
+// -------- Start Customer manager ----------
+//show home customer manager
+Route::prefix('admin/customer')->group(function () {
+    Route::get('/', [CustomerController::class, 'show'])->name('admin.customer');
+
+//show create form
+    Route::get('/create', [CustomerController::class, 'create'])->name('customer.create');
+    Route::post('/create', [CustomerController::class, 'store'])->name('customer.store');
+//show edit form
+    Route::get('/{customer}/edit', [CustomerController::class, 'edit'])->name('customer.edit');
+    Route::put('/{customer}/edit', [CustomerController::class, 'update'])->name('customer.update');
+    Route::delete('/{customer}', [CustomerController::class, 'destroy'])->name('customer.destroy');
+//show edit status form
+    Route::get('/admin/{customer}/status', [CustomerController::class, 'editStatus'])->name('customer.editStatus');
+    Route::put('/admin/{customer}/status', [CustomerController::class, 'updateStatus'])->name('customer.status');
+});
+// -------- End Customer manager ----------
+
+// -------- Start Category manager ----------
+Route::prefix('admin/category')->group(function(){
+    //Route read
+    Route::get('/', [\App\Http\Controllers\CategoryController::class, 'index'])->name('category.index');
+    Route::get('/detail/{category}', [\App\Http\Controllers\CategoryController::class, 'showDetail'])->name('category.detail');
+    //Route hiển thị form thêm brand
+    Route::get('/create', [\App\Http\Controllers\CategoryController::class, 'create'])->name('category.create');
+    //Route thêm dữ liệu lên db
+    Route::post('/create', [\App\Http\Controllers\CategoryController::class, 'store'])->name('category.store');
+    //Route hiển thị form sửa
+    Route::get('/{category}/edit',[\App\Http\Controllers\CategoryController::class, 'edit'])->name('category.edit');
+    //Route update dữ liệu trên db
+    Route::put('/{category}/edit', [\App\Http\Controllers\CategoryController::class, 'update'])->name('category.update');
+    //Route để xóa
+    Route::delete('/{category}', [\App\Http\Controllers\CategoryController::class, 'destroy'])->name('category.destroy');
+});
+//// -------- End Category manager ----------
+//
+//// -------- Start Brand manager ----------
+Route::prefix('admin/brand')->group(function(){
+    //Route read
+    Route::get('/', [\App\Http\Controllers\BrandController::class, 'index'])->name('brand.index');
+    //Route hiển thị form thêm brand
+    Route::get('/create', [\App\Http\Controllers\BrandController::class, 'create'])->name('brand.create');
+    //Route thêm dữ liệu lên db
+    Route::post('/create', [\App\Http\Controllers\BrandController::class, 'store'])->name('brand.store');
+    //Route hiển thị form sửa
+    Route::get('/{brand}/edit',[\App\Http\Controllers\BrandController::class, 'edit'])->name('brand.edit');
+    //Route update dữ liệu trên db
+    Route::put('/{brand}/edit', [\App\Http\Controllers\BrandController::class, 'update'])->name('brand.update');
+    //Route để xóa
+    Route::delete('/{brand}', [\App\Http\Controllers\BrandController::class, 'destroy'])->name('brand.destroy');
+});
+//// -------- End Brand manager ----------
+//
+//// -------- Start Country manager ----------
+Route::prefix('admin/country')->group(function(){
+    //Route read
+    Route::get('/', [\App\Http\Controllers\CountryController::class, 'index'])->name('country.index');
+    //Route hiển thị form thêm brand
+    Route::get('/create', [\App\Http\Controllers\CountryController::class, 'create'])->name('country.create');
+    //Route thêm dữ liệu lên db
+    Route::post('/create', [\App\Http\Controllers\CountryController::class, 'store'])->name('country.store');
+    //Route hiển thị form sửa
+    Route::get('/{country}/edit',[\App\Http\Controllers\CountryController::class, 'edit'])->name('country.edit');
+    //Route update dữ liệu trên db
+    Route::put('/{country}/edit', [\App\Http\Controllers\CountryController::class, 'update'])->name('country.update');
+    //Route để xóa
+    Route::delete('/{country}', [\App\Http\Controllers\CountryController::class, 'destroy'])->name('country.destroy');
+});
+// -------- End Country manager ----------
+
+// -------- Start Order manager ----------
+Route::prefix('admin/order')->group(function(){
+    //Route read
+    Route::get('/', [\App\Http\Controllers\OrderController::class, 'index'])->name('order.index');
+    Route::get('/detail/{order}', [\App\Http\Controllers\OrderController::class, 'showDetail'])->name('order.detail');
+    //Route hiển thị form sửa
+    Route::get('/{order}/edit',[\App\Http\Controllers\CountryController::class, 'edit'])->name('order.edit');
+    //Route update dữ liệu trên db
+    Route::put('/{order}/edit', [\App\Http\Controllers\CountryController::class, 'update'])->name('order.update');
+    //Route để xóa
+    Route::delete('/{order}', [\App\Http\Controllers\CountryController::class, 'destroy'])->name('order.destroy');
+});
+// -------- End Order manager ----------

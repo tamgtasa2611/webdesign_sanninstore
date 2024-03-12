@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Admin;
+use App\Models\Customer;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Product;
@@ -9,6 +11,7 @@ use App\Requests\StoreOrderRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 use function PHPUnit\Framework\isEmpty;
@@ -60,7 +63,7 @@ class OrderController extends Controller
         }
 
         Session::forget('cart');
-        return Redirect::route('orderHistory')->with('success', 'Order created successfully!');
+        return Redirect::route('customer.orderHistory')->with('success', 'Order created successfully!');
 //        } else {
 //            dd("loi");
 ////            return Redirect::route('checkout')->with('error', 'Create order failed!');
@@ -69,8 +72,119 @@ class OrderController extends Controller
 
     public function cancelOrder(Order $order)
     {
-        $id = $order->id;
-        $order->delete($id);
+        $array = [];
+        $array = Arr::add($array, 'order_status', 4);
+        $order->update($array);
         return to_route('orderHistory')->with('success', 'Cancel order successfully!');
+    }
+
+    //ADMIN
+    public function index()
+    {
+        $orders = Order::with('admin')->paginate(6);
+        return view("admins.order_manager.index", [
+            "orders" => $orders,
+        ]);
+    }
+
+//    public function showDetail(OrderDetail $orderDetail)
+//    {
+//        $order = OrderDetail::where('order_id', '=', $orderDetail->order_id)->first();
+//        $product = Product::all();
+//        $customer = Customer::all();
+//        $admin = Admin::all();
+//        return view('admins.order_manager.order-detail', [
+//            'orderDetail' => $orderDetail,
+//            'order' => $order,
+//            'product' => $product,
+//            'customer' => $customer,
+//            'admin' => $admin
+//        ]);
+//    }
+
+    public function showDetail(Order $order)
+    {
+        $orderId = $order->id;
+        $orderDetails = DB::table('orders_details')
+            ->where('order_id', '=', $orderId)
+            ->join('products', 'orders_details.product_id', '=', 'products.id')
+            ->get();
+
+        $orderAmount = 0;
+        $orderItems = 0;
+        foreach ($orderDetails as $detail) {
+            $orderItems += $detail->sold_quantity;
+            $orderAmount += $detail->sold_price * $detail->sold_quantity;
+        }
+        $orderTotal = $orderAmount + 10;
+        $admin = Admin::where('id', '=', $order->admin_id)->first();
+//        $product = Product::all();
+//        $customer = Customer::all();
+//        $admin = Admin::all();
+        return view('admins.order_manager.order-detail', [
+            'order' => $order,
+            'admin' => $admin,
+            'order_details' => $orderDetails,
+            'order_item' => $orderItems,
+            'order_amount' => $orderAmount,
+            'order_total' => $orderTotal,
+//            'product' => $product,
+//            'customer' => $customer,
+//            'admin' => $admin
+        ]);
+    }
+
+    public function edit(Product $product)
+    {
+        $brands = Brand::all();
+        $categories = Category::all();
+        $ages = Age::all();
+        $countries = Country::all();
+        return view('admins.product_manager.edit', [
+            'product' => $product,
+            'brands' => $brands,
+            'categories' => $categories,
+            'ages' => $ages,
+            'countries' => $countries
+        ]);
+    }
+
+    public function update(UpdateProductRequest $request, Product $product)
+    {
+        $data = $request->validate([
+            'product_name' => 'required',
+            'quantity' => 'required|numeric',
+            'price' => 'required|numeric',
+            'description' => 'required',
+            'category_id' => 'required|numeric',
+            'country_id' => 'required|numeric',
+            'age_id' => 'required|numeric',
+            'brand_id' => 'required|numeric',
+        ]);
+
+        if ($request->has('image')) {
+            $file = $request->file('image');
+            $extension = $file->getClientOriginalExtension();
+            $filename = time() . '.' . $extension;
+            $path = 'images/products/';
+            $file->move($path, $filename);
+            if (file_exists($product->image)) {
+                unlink($product->image);
+            }
+        }
+
+        $product->update([
+            'product_name' => $request->product_name,
+            'quantity' => $request->quantity,
+            'price' => $request->price,
+            'description' => $request->description,
+            'image' => $path . $filename,
+            'category_id' => $request->category_id,
+            'country_id' => $request->country_id,
+            'age_id' => $request->age_id,
+            'brand_id' => $request->brand_id,
+        ]);
+        //Quay về danh sách
+        return Redirect::route('admin.product')->with('success', 'Edit a product successfully!');
     }
 }

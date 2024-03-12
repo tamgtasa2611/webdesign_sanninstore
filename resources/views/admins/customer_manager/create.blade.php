@@ -1,5 +1,5 @@
 @vite(["resources/sass/app.scss", "resources/js/app.js"])
-<body style="background-color: #303036">
+<body style="background-color: #f2f7fe">
 <div id="content" class="">
     <div class="wrapper d-flex align-items-stretch">
         <div style="width: 620px"></div>
@@ -11,8 +11,8 @@
 
         <!--  content  -->
         <div class="justify-content-center mt-5" style="width: 620px">
-            <h4 class="fs-1 text-white text-center">Add a new customer</h4>
-            <form method="post" action="{{route('customer/store')}}" enctype="multipart/form-data">
+            <h4 class="fs-1 text-center">Add a new customer</h4>
+            <form method="post" action="{{route('customer.store')}}" enctype="multipart/form-data">
                 <div class="card-body bg-white rounded-4 p-5 shadow-lg m-5">
                     <h2 class="card-title font-monospace">Registration Form</h2>
                     <form>
@@ -77,11 +77,29 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="row justify-content-between w-75">
+                            <div class="col-4">
+                                <div class="input-group d-flex">
+                                    <label class="col-form-label text-dark font-monospace">status</label>
+                                    <div style="display: inline-block" class="d-flex">
+                                        <input class="form-check-input" type="radio" name="status"
+                                               value="1">
+                                        Active
+                                        <input class="form-check-input" type="radio" name="status"
+                                               value="2">
+                                        Locked
+                                        <input class="form-check-input" type="radio" name="status"
+                                               value="3">
+                                        Banned
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </form>
                     <div class="row justify-content-between w-100 mt-4">
                         <div class="col-4">
                             <div class="d-flex">
-                                <a class="btn btn-primary nice-box-shadow font-monospace" href="{{route('admin/customer')}}">Back</a>
+                                <a class="btn btn-primary nice-box-shadow font-monospace" href="{{route('admin.customer')}}">Back</a>
                             </div>
                         </div>
                         <div class="col-2">
