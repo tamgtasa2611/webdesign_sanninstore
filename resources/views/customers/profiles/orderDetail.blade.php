@@ -1,6 +1,5 @@
 @vite(["resources/sass/app.scss", "resources/js/app.js"])
 <x-layout>
-    @include('layouts/nav')
     <div class="container d-flex align-items-center h-80 mt-5  overflow-hidden">
         <div class="border w-20 rounded-start p-3 h-100">
             @include('layouts/profile_menu')
@@ -11,7 +10,24 @@
                     Order #{{$order->id}}
                 </div>
                 <div class="d-flex align-items-center">
-                    Status: {{$order->order_status}}
+                    <span class="me-3">Status:</span>
+                    @switch($order->order_status)
+                        @case(0)
+                            <span class="text-danger fw-bold">Pending</span>
+                            @break
+                        @case(1)
+                            <span class="text-success fw-bold">Confirmed</span>
+                            @break
+                        @case(2)
+                            <span class="text-primary fw-bold">Delivery</span>
+                            @break
+                        @case(3)
+                            <span class="text-success fw-bold">Completed</span>
+                            @break
+                        @case(4)
+                            <span class="text-danger fw-bold">Cancelled</span>
+                            @break
+                    @endswitch
                 </div>
             </div>
             <hr>
@@ -50,7 +66,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="w-50 border rounded p-3 overflow-y-auto" style="height: 300px">
+                    <div class="w-50 border rounded p-3 overflow-y-auto" style="height: 314px">
                         @foreach($order_details as $detail)
                             <div class="d-flex mb-3 ">
                                 <div class="border rounded p-3 object-fit-fill
@@ -75,30 +91,35 @@
                     </div>
                 </div>
                 <div class="d-flex w-100 justify-content-between align-items-center">
-                    <a href="{{route('orderHistory')}}" class="btn btn-secondary">
+                    <a href="{{route('customer.orderHistory')}}" class="btn btn-light">
                         Back
                     </a>
-                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                        Cancel
-                    </button>
+                    @if($order->order_status != 4)
+                        <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                data-bs-target="#exampleModal">
+                            Cancel
+                        </button>
+                    @endif
                 </div>
 
                 <!-- Modal -->
-                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                     aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="exampleModalLabel">
+                                <h1 class="modal-title fs-5 text-danger" id="exampleModalLabel">
                                     Are you sure?
                                 </h1>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                Please check order details again...
+                                You won't be able to revert this!
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <a href="{{route('cancelOrder', $order)}}" class="btn btn-danger">Cancel</a>
+                                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                                <a href="{{route('customer.cancelOrder', $order)}}" class="btn btn-danger">Cancel</a>
                             </div>
                         </div>
                     </div>
@@ -106,5 +127,4 @@
             </div>
         </div>
     </div>
-    @include('layouts/footer')
 </x-layout>

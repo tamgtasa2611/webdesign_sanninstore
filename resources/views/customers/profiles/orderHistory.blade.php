@@ -1,6 +1,5 @@
 @vite(["resources/sass/app.scss", "resources/js/app.js"])
 <x-layout>
-    @include('layouts/nav')
     <div class="container d-flex align-items-center h-80 mt-5  overflow-hidden">
         <div class="border w-20 rounded-start p-3 h-100">
             @include('layouts/profile_menu')
@@ -25,7 +24,16 @@
                                         <span class="text-danger">Pending</span>
                                         @break
                                     @case(1)
-                                        <span class="text-primary">Confirmed</span>
+                                        <span class="text-success">Confirmed</span>
+                                        @break
+                                    @case(2)
+                                        <span class="text-primary">Delivery</span>
+                                        @break
+                                    @case(3)
+                                        <span class="text-success">Completed</span>
+                                        @break
+                                    @case(4)
+                                        <span class="text-danger">Cancelled</span>
                                         @break
                                 @endswitch
                             </div>
@@ -47,7 +55,7 @@
                             </div>
                         </div>
                         <div class="h-100 w-25 d-flex align-items-center justify-content-end">
-                            <a href="{{route('orderDetail', $order)}}" class="btn btn-primary">
+                            <a href="{{route('customer.orderDetail', $order)}}" class="btn btn-primary">
                                 View order
                             </a>
                         </div>
@@ -62,5 +70,4 @@
             </div>
         </div>
     </div>
-    @include('layouts/footer')
 </x-layout>
