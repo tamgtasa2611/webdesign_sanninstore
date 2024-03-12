@@ -1,18 +1,17 @@
 @vite(["resources/sass/app.scss", "resources/js/app.js"])
+<title>Edit Customer</title>
 <body style="background-color: #303036">
 <div id="content" class="">
     <div class="wrapper d-flex align-items-stretch">
         <div style="width: 620px"></div>
-        <div class="position-fixed" style="height: 100%">
-
-            @include("layouts/navbar_adminMenu");
-
+        <div class="position-fixed rounded-left" style="height: 100%">
+            @include('layouts/navbar_adminMenu')
         </div>
 
         <!--  content  -->
         <div class="justify-content-center mt-5" style="width: 620px">
-            <h4 class="fs-1 text-white text-center">Edit Customer</h4>
-            <form method="post" action="{{ route('customer/update', $customer) }}" enctype="multipart/form-data">
+            <h4 class="fs-1 text-white text-center">Edit Customer #{{$customer->id}}</h4>
+            <form method="post" action="{{ route('customer.update', $customer) }}" enctype="multipart/form-data">
                 <div class="card-body bg-white rounded-4 p-5 shadow-lg m-5">
                     <h2 class="card-title font-monospace">Edit Form</h2>
                     <form>
@@ -69,30 +68,12 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row justify-content-between w-75">
-                            <div class="col-4">
-                                <div class="input-group d-flex">
-                                    <label class="col-form-label text-dark font-monospace">status</label>
-                                    <div style="display: inline-block" class="d-flex">
-                                        <input class="form-check-input" type="radio" name="status"
-                                               value="{{$customer->status}}">
-                                        Active
-                                        <input class="form-check-input" type="radio" name="status"
-                                               value="{{$customer->status}}">
-                                        Locked
-                                        <input class="form-check-input" type="radio" name="status"
-                                               value="{{$customer->status}}">
-                                        Banned
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </form>
                     <div class="row justify-content-between w-100 mt-4">
                         <div class="col-4">
                             <div class="d-flex">
                                 <a class="btn btn-primary nice-box-shadow font-monospace"
-                                   href="{{route('admin/customer')}}">Back</a>
+                                   href="{{route('admin.customer')}}">Back</a>
                             </div>
                         </div>
                         <div class="col-2">

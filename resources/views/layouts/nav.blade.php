@@ -1,4 +1,4 @@
-<nav class="navbar bg-primary bg-gradient nav-underline navbar-expand-lg bd-navbar fixed-top">
+<nav class="navbar nav-underline navbar-expand-lg bd-navbar fixed-top" style="background-color: #ffc107">
     <div class="container-xxl bd-gutter flex-wrap flex-lg-nowrap text-uppercase px-0">
         <a class="navbar-brand" href="/">
             <img src="{{asset('images/brand.png')}}" alt="brand"

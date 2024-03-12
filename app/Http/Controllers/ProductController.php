@@ -8,6 +8,8 @@ use App\Models\Product;
 use App\Models\Category;
 use App\Models\Country;
 use App\Models\Age;
+use App\Requests\StoreProductRequest;
+use App\Requests\UpdateProductRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
@@ -259,25 +261,46 @@ class ProductController extends Controller
             'customer' => $customer
         ]);
     }
-
 //    ADMIN
-    public function indexAdmins()
+    public function show2()
     {
-        $products = Product::all();
-        $categories = Category::all();
-        $ages = Age::all();
-        $countries = Country::all();
-        $brands = Brand::all();
-        return view('products.index', compact('products', 'categories', 'ages', 'countries', 'brands'));
+        $products = Product::with('brand')->paginate(6);
+        return view("admins.product_manager.index", [
+            "products" => $products
+        ]);
+    }
+
+    public function showDetail(Product $product)
+    {
+        $brand = Brand::where('id', '=', $product->brand_id)->first();
+//        $category = Category::all();
+//        $age = Age::all();
+//        $country = Country::all();
+        return view('admins.product_manager.product-detail', [
+            'product' => $product,
+            'brand' => $brand,
+//            'category' => $category,
+//            'age' => $age,
+//            'country' => $country
+        ]);
     }
 
     public function create()
     {
-        return view('products.create');
+        $brands = Brand::all();
+        $categories = Category::all();
+        $ages = Age::all();
+        $countries = Country::all();
+        return view('admins.product_manager.create', [
+            'brands' => $brands,
+            'categories' => $categories,
+            'ages' => $ages,
+            'countries' => $countries
+        ]);
+
     }
 
-
-    public function store(Request $request)
+    public function store(StoreProductRequest $request)
     {
         $data = $request->validate([
             'product_name' => 'required',
@@ -310,23 +333,31 @@ class ProductController extends Controller
             'age_id' => $request->age_id,
             'brand_id' => $request->brand_id,
         ]);
-        return redirect(route('products.index'));
+        return Redirect::route('admin.product')->with('success', 'Add a product successfully!');
     }
 
     public function edit(Product $product)
     {
-        return view('products.edit', ['product' => $product]);
+        $brands = Brand::all();
+        $categories = Category::all();
+        $ages = Age::all();
+        $countries = Country::all();
+        return view('admins.product_manager.edit', [
+            'product' => $product,
+            'brands' => $brands,
+            'categories' => $categories,
+            'ages' => $ages,
+            'countries' => $countries
+        ]);
     }
 
-
-    public function update(Product $product, Request $request)
+    public function update(UpdateProductRequest $request, Product $product)
     {
         $data = $request->validate([
             'product_name' => 'required',
             'quantity' => 'required|numeric',
             'price' => 'required|numeric',
             'description' => 'required',
-            'image' => 'required|mimes:png,jpg,jpeg,webp',
             'category_id' => 'required|numeric',
             'country_id' => 'required|numeric',
             'age_id' => 'required|numeric',
@@ -355,14 +386,15 @@ class ProductController extends Controller
             'age_id' => $request->age_id,
             'brand_id' => $request->brand_id,
         ]);
-        return redirect(route('products.index'));
+        //Quay về danh sách
+        return Redirect::route('admin.product')->with('success', 'Edit a product successfully!');
     }
 
-    public function destroy(Product $products, Request $request)
+    public function destroy(Product $product)
     {
         //Xóa bản ghi được chọn
-        $products->delete();
+        $product->delete();
         //Quay về danh sách
-        return redirect(route('products.index'));
+        return Redirect::route('admin.product')->with('success', 'Delete a product successfully!');
     }
 }
